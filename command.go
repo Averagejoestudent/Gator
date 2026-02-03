@@ -5,34 +5,37 @@ import (
 	"fmt"
 
 	"github.com/Averagejoestudent/Gator/internal/config"
+	"github.com/Averagejoestudent/Gator/internal/database"
 )
-type state struct{
-	cfg  *config.Config
+
+type state struct {
+	db  *database.Queries
+	cfg *config.Config
 }
 
-type command struct{
-	name string 
-	args []string
+type command struct {
+	Name string
+	Args []string
 }
 
 type commands struct {
-	variable map[string]func(*state, command) error
+	registeredCommands map[string]func(*state, command) error
 }
 
-func (c *commands) run(s *state, cmd command) error{
+func (c *commands) run(s *state, cmd command) error {
 	if s == nil {
 		return errors.New("the state struct is nil")
 	}
-	handler , ok := c.variable[cmd.name] 
+	handler, ok := c.registeredCommands[cmd.Name]
 	if !ok {
-		return fmt.Errorf("the unkown command name %s",cmd.name)
+		return fmt.Errorf("the unkown command name %s", cmd.Name)
 	}
-	return handler(s,cmd)
+	return handler(s, cmd)
 }
 
-func (c *commands) register(name string, f func(*state, command) error){
+func (c *commands) register(name string, f func(*state, command) error) {
 	if name == "" {
-		return 
+		return
 	}
-	c.variable[name] = f
+	c.registeredCommands[name] = f
 }

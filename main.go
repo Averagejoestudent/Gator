@@ -28,6 +28,7 @@ func main() {
 	myvar.register("login", handlerLogin)
 	myvar.register("register", handlerRegister)
 	myvar.register("reset", handlerReset)
+	myvar.register("users", handlerUsers)
 	if len(os.Args) < 2 {
 		fmt.Println("not enough arguments")
 		os.Exit(1)

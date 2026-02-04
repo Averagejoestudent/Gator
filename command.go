@@ -28,7 +28,7 @@ func (c *commands) run(s *state, cmd command) error {
 	}
 	handler, ok := c.registeredCommands[cmd.Name]
 	if !ok {
-		return fmt.Errorf("the unkown command name %s", cmd.Name)
+		return fmt.Errorf("the unknown command name %s", cmd.Name)
 	}
 	return handler(s, cmd)
 }

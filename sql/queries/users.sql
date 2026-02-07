@@ -18,4 +18,4 @@ DELETE FROM users;
 
 
 -- name: GetUsers :many
-SELECT name FROM users;
+SELECT * FROM users;

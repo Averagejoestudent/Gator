@@ -63,19 +63,17 @@ func handlerReset(s *state, cmd command) error {
 	return nil
 }
 
-func handlerUsers(s *state, cmd command) error {
-	Usernames, err := s.db.GetUsers(context.Background())
+func handlerListUsers(s *state, cmd command) error {
+	users, err := s.db.GetUsers(context.Background())
 	if err != nil {
-		return fmt.Errorf("Cannot get users due to:%w", err)
+		return fmt.Errorf("couldn't list users: %w", err)
 	}
-	for _, username := range Usernames {
-		if username == s.cfg.CurrentUser {
-			fmt.Printf("%s (current)", username)
-		} else {
-			fmt.Printf("%s", username)
+	for _, user := range users {
+		if user.Name == s.cfg.CurrentUser {
+			fmt.Printf("* %v (current)\n", user.Name)
+			continue
 		}
-		fmt.Println()
+		fmt.Printf("* %v\n", user.Name)
 	}
-
 	return nil
 }

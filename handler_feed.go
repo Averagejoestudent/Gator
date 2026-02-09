@@ -51,6 +51,16 @@ func printFeed(feed database.Feed) {
 	fmt.Printf("* UserID:        %s\n", feed.UserID)
 }
 
-func handler_Feed(s *state, cmd command) error{
+func handler_Feed(s *state, cmd command) error {
+	info, err := s.db.UsernameFeed(context.Background())
+	if err != nil {
+		return fmt.Errorf("Cannot show username because : %w", err)
+	}
+	for _, items := range info {
+		fmt.Printf("* Name:          %s\n", items.Name)
+		fmt.Printf("* URL:           %s\n", items.Url)
+		fmt.Printf("* Username:      %s\n", items.Username)
+	}
+
 	return nil
 }

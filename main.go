@@ -30,8 +30,11 @@ func main() {
 	myvar.register("reset", handlerReset)
 	myvar.register("users", handlerListUsers)
 	myvar.register("agg", handlerAgg)
-	myvar.register("addfeed", handlerAddFeed)
+	myvar.register("addfeed", middlewareLoggedIn(handlerAddFeed))
 	myvar.register("feeds", handler_Feed)
+	myvar.register("follow", middlewareLoggedIn(handlerFollow))
+	myvar.register("following", middlewareLoggedIn(handlerFollowing))
+	myvar.register("unfollow", middlewareLoggedIn(handlerUnFollow))
 	if len(os.Args) < 2 {
 		fmt.Println("not enough arguments")
 		os.Exit(1)

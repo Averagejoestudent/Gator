@@ -35,6 +35,7 @@ func main() {
 	myvar.register("follow", middlewareLoggedIn(handlerFollow))
 	myvar.register("following", middlewareLoggedIn(handlerFollowing))
 	myvar.register("unfollow", middlewareLoggedIn(handlerUnFollow))
+	myvar.register("browse", middlewareLoggedIn(handlerBrowse))
 	if len(os.Args) < 2 {
 		fmt.Println("not enough arguments")
 		os.Exit(1)
